@@ -1,5 +1,5 @@
 # Use phusion/baseimage as base image.
-FROM phusion/baseimage:0.9.5
+FROM ubuntu:precise
 
 MAINTAINER Wilson Mok <wilson@infrequent.co>
 
@@ -7,7 +7,7 @@ MAINTAINER Wilson Mok <wilson@infrequent.co>
 ENV HOME /root
 
 # Use baseimage-docker's init system.
-CMD ["/sbin/my_init"]
+#CMD ["/sbin/my_init"]
 
 # Install dependencies
 #RUN apt-get install -y python-pip git pciutils sudo net-tools isc-dhcp-client python-software-properties wget
@@ -23,10 +23,11 @@ RUN apt-get install -y libssl-dev libcurl4-gnutls-dev git-core libgnutls-dev lua
 RUN echo 'user=root' >> /etc/dnsmasq.conf
 
 # Setup system for the archiveteam autoscript
-RUN useradd archiveteam
-RUN echo "archiveteam ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
-RUN mkdir /home/archiveteam && chown archiveteam: /home/archiveteam
+#RUN useradd archiveteam
+#RUN echo "archiveteam ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+#RUN mkdir /home/archiveteam && chown archiveteam: /home/archiveteam
 
+RUN adduser --system --group --shell /bin/bash archiveteam
 # Install script dependencies [phase 2]
 RUN apt-get install -y git-core libgnutls-dev lua5.1 liblua5.1-0 liblua5.1-0-dev screen python-dev python-pip bzip2 zlib1g-dev
 RUN pip install seesaw
