@@ -1,4 +1,4 @@
-# Use phusion/baseimage as base image.
+# Use ubuntu:precise as base image, ubuntu 12.04
 FROM ubuntu:precise
 
 MAINTAINER Wilson Mok <wilson@infrequent.co>
@@ -6,35 +6,22 @@ MAINTAINER Wilson Mok <wilson@infrequent.co>
 # Set environment variables.
 ENV HOME /root
 
-# Use baseimage-docker's init system.
-#CMD ["/sbin/my_init"]
-
-# Install dependencies
-#RUN apt-get install -y python-pip git pciutils sudo net-tools isc-dhcp-client python-software-properties wget
-#RUN apt-add-repository -y ppa:archiveteam/wget-lua && apt-get update
-#RUN apt-get install -y wget-lua
+# Install dependencies [phase 1]
+RUN apt-add-repository -y ppa:archiveteam/wget-lua && apt-get update
 RUN apt-get update
 RUN apt-get upgrade -y
-
-# Install script dependencies [phase 1]
-RUN apt-get install -y libssl-dev libcurl4-gnutls-dev git-core libgnutls-dev lua5.1 liblua5.1-0 liblua5.1-0-dev screen python-dev python-pip bzip2 zlib1g-dev make curl
+RUN apt-get install -y libssl-dev libcurl4-gnutls-dev git-core libgnutls-dev lua5.1 liblua5.1-0 liblua5.1-0-dev screen python-dev python-pip bzip2 zlib1g-dev make curl wget-lua unzip wget
 
 # Fix dnsmasq bug (see https://github.com/nicolasff/docker-cassandra/issues/8#issuecomment-36922132)
 RUN echo 'user=root' >> /etc/dnsmasq.conf
 
 # Setup system for the archiveteam autoscript
-#RUN useradd archiveteam
-#RUN echo "archiveteam ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
-#RUN mkdir /home/archiveteam && chown archiveteam: /home/archiveteam
-
 RUN adduser --system --group --shell /bin/bash archiveteam
-# Install script dependencies [phase 2]
-RUN apt-get install -y git-core libgnutls-dev lua5.1 liblua5.1-0 liblua5.1-0-dev screen python-dev python-pip bzip2 zlib1g-dev
+
+# Install dependencies [phase 2]
 RUN pip install seesaw
 RUN pip install seesaw requests
-
-# Expose web interface port
-EXPOSE 8001
+RUN pip install --upgrade seesaw requests
 
 # Clean up APT when done.
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
