@@ -7,10 +7,9 @@ MAINTAINER Wilson Mok <wilson@infrequent.co>
 ENV HOME /root
 
 # Install dependencies [phase 1]
-RUN apt-add-repository -y ppa:archiveteam/wget-lua && apt-get update
 RUN apt-get update
 RUN apt-get upgrade -y
-RUN apt-get install -y libssl-dev libcurl4-gnutls-dev git-core libgnutls-dev lua5.1 liblua5.1-0 liblua5.1-0-dev screen python-dev python-pip bzip2 zlib1g-dev make curl wget-lua unzip wget
+RUN apt-get install -y libssl-dev libcurl4-gnutls-dev git-core libgnutls-dev lua5.1 liblua5.1-0 liblua5.1-0-dev screen python-dev python-pip bzip2 zlib1g-dev make curl unzip wget
 
 # Fix dnsmasq bug (see https://github.com/nicolasff/docker-cassandra/issues/8#issuecomment-36922132)
 RUN echo 'user=root' >> /etc/dnsmasq.conf
