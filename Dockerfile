@@ -10,9 +10,11 @@ ENV HOME /root
 CMD ["/sbin/my_init"]
 
 # Install dependencies
-RUN apt-get install -y python-pip git pciutils sudo net-tools isc-dhcp-client python-software-properties wget
-RUN apt-add-repository -y ppa:archiveteam/wget-lua && apt-get update
-RUN apt-get install -y wget-lua
+#RUN apt-get install -y python-pip git pciutils sudo net-tools isc-dhcp-client python-software-properties wget
+#RUN apt-add-repository -y ppa:archiveteam/wget-lua && apt-get update
+#RUN apt-get install -y wget-lua
+RUN apt-get update
+RUN apt-get upgrade -y
 
 # Install script dependencies [phase 1]
 RUN apt-get install -y libssl-dev libcurl4-gnutls-dev git-core libgnutls-dev lua5.1 liblua5.1-0 liblua5.1-0-dev screen python-dev python-pip bzip2 zlib1g-dev make curl
