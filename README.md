@@ -11,7 +11,7 @@ Available as a build on the index as [`infrequent/at-as-dockerfile`](https://reg
 
 
 	docker pull infrequent/at-as-dockerfile
-	docker run -t -i infrequent/at-as-dockerfile
+	docker run -t -i infrequent/at-as-dockerfile /sbin/my_init -- bash -l
 
 	# you will now be inside the created container
 	# all you need to do now is pull the project
